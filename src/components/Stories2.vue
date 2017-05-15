@@ -1,0 +1,1 @@
+Stories2.vue
