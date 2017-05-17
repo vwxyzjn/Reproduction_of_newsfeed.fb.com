@@ -1,12 +1,14 @@
 <template>
-  <div class="welcome1">
-    <div class="word">
-      <transition name="title">
-          <h1 v-if="title_show">Welcome to News Feed</h1>
-      </transition>
-      <transition name="words">
-          <p v-if="words_show">Our goal with News Feed is to show you the stories that <br> matter most to you every time you visit Facebook</p>
-      </transition>
+  <div class="components">
+    <div class="welcome1">
+      <div class="word">
+        <div class="title">
+            <h1>Welcome to News Feed</h1>
+        </div>
+        <div class="words">
+            <p>Our goal with News Feed is to show you the stories that <br> matter most to you evdivery time you visit Facebook</p>
+        </div>
+      </div>
     </div>
     <div class="video">
       <div class="svg-wrapper">
@@ -374,18 +376,19 @@
 </template>
 
 <script>
+import TweenMax from "gsap/TweenMax.js"
+import TimelineMax from "gsap/TimelineMax.js"
+import Bus from './EventBus'
+
 export default {
   name: 'welcome1',
-  data () {
-    return {
-      title_show: false,
-      words_show: false
-    }
-  },
-  created(){
-    let scope = this
-    setTimeout(function(){ scope.title_show = true }, 1000);
-    setTimeout(function(){ scope.words_show = true }, 2000);
+  mounted(){
+    var tl = new TimelineMax({delay: 1})
+    tl.to('h1', 1, {opacity: "1"})
+    .to('p', 1, {opacity: "1"})
+    .to('.video', 1, {yPercent: -70})
+    Bus.$emit('logo-loading', tl)
+    Bus.$emit('menu-loading', tl)
   }
 }
 </script>
@@ -397,6 +400,7 @@ export default {
   height: 100%;
   width: 100%;
   text-align: center;
+  position: absolute;
 }
 
 .word {
@@ -405,12 +409,13 @@ export default {
 }
 
 .video {
-  width: 40%;
+  width: 50%;
   position: absolute;
-  bottom: -60px;
+  bottom: 0;
   left: 50%;
-  transform: translate(-50%);
-  max-width: 400px;
+  transform: translate(-50%, 100%);
+  max-width: 800px;
+  z-index: 50;
 }
 
 h1{
@@ -419,6 +424,7 @@ h1{
   font-weight: 400;
   line-height: .93;
   color: #fff;
+  opacity: 0;
 }
 
 p{
@@ -427,22 +433,9 @@ p{
   font-weight: 400;
   line-height: 1.56;
   color: #d2d6e4;
+  opacity: 0;
 }
 
-
-.title-enter-active, .title-leave-active {
-  transition: opacity .5s
-}
-.title-enter, .title-leave-to /* .fade-leave-active in <2.1.8 */ {
-  opacity: 0
-}
-
-.words-enter-active, .words-leave-active {
-  transition: opacity .5s
-}
-.words-enter, .words-leave-to /* .fade-leave-active in <2.1.8 */ {
-  opacity: 0
-}
 
 
 </style>

@@ -9,8 +9,23 @@
 </template>
 
 <script>
+import TweenMax from "gsap/TweenMax.js"
+import TimelineMax from "gsap/TimelineMax.js"
+import Bus from './EventBus'
+
 export default {
-  name: 'app'
+  name: 'logo',
+  created(){
+  	Bus.$on('logo-loading', (timeline) => {
+  		timeline.to('.facebook-logo',1, {opacity: 1})
+  	})
+  	Bus.$on('switching-color', () => {
+  		let tl = new TimelineMax()
+  		tl.to('.facebook-logo .svg-fb-logo .background',0.3, {fill: "#3c5a99", force3D: true}, '-=0.3')
+  		tl.to('.facebook-logo .svg-fb-logo .f',0.3, {fill: "#fff", force3D: true}, '-=0.3')
+  		tl.to('.facebook-logo .title',0.3, {color: "#3c5a99", force3D: true}, '-=0.3')
+  	})
+  }
 }
 </script>
 
@@ -19,8 +34,10 @@ export default {
 	font-family: 'Source Sans Pro', sans-serif;
 	position: absolute;
 	margin: 30px;
+	opacity: 0;
 	transition: opacity .2s ease-out;
 	display: block;
+	z-index: 100;
 
 	.svg-fb-logo {
 		width: 35px;
@@ -39,6 +56,7 @@ export default {
 	.title {
 		vertical-align: middle;
 		display: inline-block;
+		color: #fff;
 		margin: 0 0 0 8px;
 	}
 }
