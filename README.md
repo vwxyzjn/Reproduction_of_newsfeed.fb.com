@@ -1,6 +1,6 @@
 # animation
 
-This is a reproduction of newsfeed.fb.com. Check out the demo at https://vwxyzjn.github.io/Reproduction_on_newsfeed.fb.com/#/
+This is a reproduction of newsfeed.fb.com. Check out the demo at https://vwxyzjn.github.io/Reproduction_of_newsfeed.fb.com/
 
 ## Build Setup
 
