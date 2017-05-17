@@ -49,8 +49,9 @@ export default {
   data(){
   	return{
   		menu_opened: false,
-  		switched_color: false,
-  		supposed_color: false
+  		menu_word_color_before_toggle: "#fff",
+  		menu_word_color_after_toggle: "#fff",
+  		main_color: "#3b5999"
   	}
   },
   methods:{
@@ -69,8 +70,8 @@ export default {
   			TweenMax.to(".side-menu .menu-bar .menu-item-wrapper", 1, {height: "49px",force3D: true})
   			TweenMax.to(".side-menu .menu-bar .menu-item-wrapper .menu-item .item-text", 0.5, {opacity: 0.4,force3D: true, delay: 0.5})
   			TweenMax.to(".side-menu .menu-bar .menu-item-wrapper .menu-item #selected-text", 0.5, {opacity: 1,force3D: true, delay: 0.5})
-  			if (this.supposed_color){
-  				this.swtich_menu_color()
+  			if (this.menu_word_color_before_toggle != this.menu_word_color_after_toggle){
+  				this.swtich_menu_color(this.menu_word_color_after_toggle)
   			}
   			this.menu_opened = true
   		}
@@ -80,8 +81,8 @@ export default {
   			TweenMax.to(".side-menu .menu-bar .menu-item-wrapper", 1, {height: "25px",force3D: true})
   			TweenMax.to(".side-menu .menu-bar .menu-item-wrapper .menu-item .item-text", 0.5, {opacity: 0,force3D: true})
   			TweenMax.to(".side-menu .menu-bar .menu-item-wrapper .menu-item #selected-text", 0.5, {opacity: 0,force3D: true})
-  			if (this.supposed_color){
-  				this.swtich_menu_color()
+  			if (this.menu_word_color_before_toggle != this.menu_word_color_after_toggle){
+  				this.swtich_menu_color(this.menu_word_color_before_toggle)
   			}
   			this.menu_opened = false
   		}
@@ -93,31 +94,21 @@ export default {
   		}
   		this.$router.push(routes)
   	},
-  	swtich_menu_color(){
+  	swtich_menu_color(menu_word_color){
   		let tl = new TimelineMax()
-  		if (!this.switched_color){
-  			tl.to('.side-menu .menu-button',0.3, {color: "#3b5999", force3D: true})
-  			tl.to('.side-menu .menu-button .icon .line',0.3, {backgroundColor: "#3b5999", force3D: true}, '-=0.3')
-  			tl.to('.side-menu .menu-bar .menu-item-wrapper .menu-item .bullet .item-bullet',0.3, {borderColor: "#3b5999", force3D: true}, '-=0.3')
-  			tl.to('#selected-bullet', 0.3,{backgroundColor: "#3b5999"}, '-=0.3')
-  			this.switched_color = true
-  		}
-  		else {
-  			tl.to('.side-menu .menu-button',0.3, {color: "#fff", force3D: true})
-  			tl.to('.side-menu .menu-button .icon .line',0.3, {backgroundColor: "#fff", force3D: true}, '-=0.3')
-  			tl.to('.side-menu .menu-bar .menu-item-wrapper .menu-item .bullet .item-bullet',0.3, {borderColor: "#fff", force3D: true}, '-=0.3')
-  			tl.to('#selected-bullet', 0.3,{backgroundColor: "#fff"}, '-=0.3')
-  			this.switched_color = false
-  		}
+  		tl.to('.side-menu .menu-button',0.3, {color: menu_word_color, force3D: true})
+  		tl.to('.side-menu .menu-button .icon .line',0.3, {backgroundColor: menu_word_color, force3D: true}, '-=0.3')
+  		tl.to('.side-menu .menu-bar .menu-item-wrapper .menu-item .bullet .item-bullet',0.3, {borderColor: menu_word_color, force3D: true}, '-=0.3')
+  		tl.to('#selected-bullet', 0.3,{backgroundColor: menu_word_color}, '-=0.3')
   	}
   },
   created(){
   	Bus.$on('menu-loading', (timeline) => {
   		timeline.to('.side-menu',1, {opacity: 1}, '-=1')
   	})
-  	Bus.$on('switching-color', () => {
-  		this.swtich_menu_color()
-  		this.supposed_color = true
+  	Bus.$on('menu-switching-color', (menu_default_color) => {
+  		this.menu_word_color_before_toggle = menu_default_color
+  		this.swtich_menu_color(this.menu_word_color_before_toggle)
   	})
   },
   mounted(){

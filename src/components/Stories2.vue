@@ -391,7 +391,8 @@ export default {
   name: 'stories2',
   mounted(){
   	var tl2 = new TimelineMax({delay:0.3, onComplete(){
-  		Bus.$emit('switching-color')
+  		Bus.$emit('menu-switching-color', "#3b5999")
+  		Bus.$emit('logo-switching-color', "#3b5999", "#fff")
   	}})
   	// exiting the previous component
   	tl2.to('.components .welcome1', 0, {zIndex: "-1"})

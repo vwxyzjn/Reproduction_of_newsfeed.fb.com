@@ -383,7 +383,11 @@ import Bus from './EventBus'
 export default {
   name: 'welcome1',
   mounted(){
-    var tl = new TimelineMax({delay: 1})
+    Bus.$emit('menu-switching-color', "#fff")
+    Bus.$emit('logo-switching-color', "#fff", "#3b5999")
+    var tl = new TimelineMax({delay: 1, onComplete(){
+
+    }})
     tl.to('h1', 1, {opacity: "1"})
     .to('p', 1, {opacity: "1"})
     .to('.video', 1, {yPercent: -70})

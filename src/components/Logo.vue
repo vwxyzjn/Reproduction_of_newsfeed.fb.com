@@ -19,11 +19,11 @@ export default {
   	Bus.$on('logo-loading', (timeline) => {
   		timeline.to('.facebook-logo',1, {opacity: 1})
   	})
-  	Bus.$on('switching-color', () => {
+  	Bus.$on('logo-switching-color', (logo_background_color, f_color) => {
   		let tl = new TimelineMax()
-  		tl.to('.facebook-logo .svg-fb-logo .background',0.3, {fill: "#3c5a99", force3D: true}, '-=0.3')
-  		tl.to('.facebook-logo .svg-fb-logo .f',0.3, {fill: "#fff", force3D: true}, '-=0.3')
-  		tl.to('.facebook-logo .title',0.3, {color: "#3c5a99", force3D: true}, '-=0.3')
+  		tl.to('.facebook-logo .svg-fb-logo .background',0.3, {fill: logo_background_color, force3D: true}, '-=0.3')
+  		tl.to('.facebook-logo .svg-fb-logo .f',0.3, {fill: f_color, force3D: true}, '-=0.3')
+  		tl.to('.facebook-logo .title',0.3, {color: logo_background_color, force3D: true}, '-=0.3')
   	})
   }
 }
